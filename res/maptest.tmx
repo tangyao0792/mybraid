@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="1536" height="500" tilewidth="1" tileheight="1">
+ <objectgroup name="wall" width="1536" height="500">
+  <object x="46" y="436" width="90" height="39"/>
+  <object x="136" y="436" width="90" height="39"/>
+  <object x="316" y="436" width="90" height="39"/>
+  <object x="226" y="436" width="90" height="39"/>
+  <object x="496" y="436" width="90" height="39"/>
+  <object x="406" y="436" width="90" height="39"/>
+  <object x="676" y="436" width="90" height="39"/>
+  <object x="586" y="436" width="90" height="39"/>
+  <object x="856" y="436" width="90" height="39"/>
+  <object x="766" y="436" width="90" height="39"/>
+  <object x="1036" y="436" width="90" height="39"/>
+  <object x="946" y="436" width="90" height="39"/>
+  <object x="1215" y="436" width="90" height="39"/>
+  <object x="1125" y="436" width="90" height="39"/>
+  <object x="1395" y="436" width="90" height="39"/>
+  <object x="1305" y="436" width="90" height="39"/>
+  <object x="570" y="229" width="90" height="39"/>
+  <object x="480" y="229" width="90" height="39"/>
+  <object x="750" y="229" width="90" height="39"/>
+  <object x="660" y="229" width="90" height="39"/>
+  <object x="195" y="323" width="90" height="39"/>
+  <object x="337" y="263" width="90" height="39"/>
+  <object x="875" y="169" width="90" height="39"/>
+  <object x="1015" y="165" width="90" height="39"/>
+  <object x="1173" y="167" width="90" height="39"/>
+  <object x="1319" y="167" width="90" height="39"/>
+  <object x="59" y="387" width="90" height="39"/>
+ </objectgroup>
+</map>
