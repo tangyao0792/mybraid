@@ -3,5 +3,6 @@ function createSpriteFrameWithFilename(fileName) {
 	var texture = cc.TextureCache.getInstance().addImage(fileName);
 	var rect = cc.RectZero();
 	rect._size = texture.getContentSize();
-	return cc.SpriteFrame.createWithTexture(texture, rect);
+	var frame = cc.SpriteFrame.createWithTexture(texture, rect);
+	return frame;
 }
