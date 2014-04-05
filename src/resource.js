@@ -6,6 +6,8 @@ var s_springback2 = "res/map/spring_back2.png";
 
 var s_c_stand0 = "res/stand0.png";
 
+var s_grass = "res/grass.png";
+
 var standAnimation = new Array();
 for (var i = 0; i < 8; i++) {
     standAnimation[i] = "res/stand" + i + ".png";
@@ -20,7 +22,7 @@ var g_resources = [
     {src:s_map},
     {src:s_springback0},
     {src:s_springback1},
-    {src:s_springback2},
+    {src:s_springback2}
 
     //plist
 

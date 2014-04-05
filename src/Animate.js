@@ -27,22 +27,3 @@
 		}
  	}
 });
-/*function Animate(target) {
-	this.spriteFrames = new Array();
-	cc.log(this.spriteFrames);
-	this.delayUnit = 0;
-	this.totalUnit = 0;
-	this.currentIndex = 0;
-	this.target = target;
-
-		function setDelayUnit(delayUnit) {
-			this.delayUnit = delayUnit;
-		}
-		function addFrameWithFilename(fileName) {
-			cc.log(this.spriteFrames);
-		function play() {
-	
-		}
-	}
-}
-*/

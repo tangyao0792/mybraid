@@ -1,9 +1,10 @@
-var RoleSprite = cc.PhysicsSprite.extend({
+var RoleSprite = cc.Sprite.extend({
 	space:null,
 	standAnimate:null,
 	runAnimate:null,
 	animate:null,
 	currentFrame:null,
+	body:null,
 	ctor:function(src, space, p) {
 		this._super();
 		this.initWithFile(src);
@@ -18,18 +19,17 @@ var RoleSprite = cc.PhysicsSprite.extend({
 		this.scheduleUpdate();
 
 	},
+	collisionListener:function(body) {
+		cc.log("collision");
+	},
 	initPhycics:function(p) {
 		var width = this._contentSize._width;
         var height = this._contentSize._height;
 
-        this.body = new cp.Body(1, cp.momentForBox(1, width, height));
-        this.body.p = p;
+        this.body = new Body(this, this.collisionListener, this.space, {width : width, height : height}, p, false);
+        this.body.debug = true;
+        this.body.ay = g_g;
 
-        this.shape = new cp.BoxShape(this.body, width, height);
-        this.setBody(this.body);
-
-    	this.space.addBody(this.body);
-    	this.space.addShape(this.shape);
 	},
 	initAnimate:function() {
 		this.standAnimate = new Animate(this);
@@ -55,27 +55,21 @@ var RoleSprite = cc.PhysicsSprite.extend({
 	},
 	stand:function() {
 		this.setAnimate(this.standAnimate);
-		this.body.setVel(cc.p(0, 0));
+		this.body.vx = 0;
 	},
 	runLeft:function() {
-		this.faceLeft = true;
 		this.setFlippedX(false);
 		this.setAnimate(this.runAnimate);		
-		var vel = this.body.getVel();
-		vel.x = -g_runVel;
-		this.body.setVel(vel);
+		this.body.vx = -g_runVel;
 	},
 	runRight:function() {
-		this.faceLeft = false;
 		this.setFlippedX(true);
 		this.setAnimate(this.runAnimate);
-		var vel = this.body.getVel();
-		vel.x = g_runVel;
-		this.body.setVel(vel);
+		this.body.vx = g_runVel;
 	},
 	jump:function() {
-		var vel = this.body.getVel();
-		vel.y += g_jumpVel;
-		this.body.setVel(vel);
+		if (this.body.collisionFlag.down) {
+			this.body.vy += g_jumpVel;
+		}
 	}
 });
