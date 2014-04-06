@@ -20,7 +20,6 @@ var RoleSprite = cc.Sprite.extend({
 
 	},
 	collisionListener:function(body) {
-		cc.log("collision");
 	},
 	initPhycics:function(p) {
 		var width = this._contentSize._width;

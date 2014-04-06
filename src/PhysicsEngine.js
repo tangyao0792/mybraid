@@ -104,20 +104,23 @@ Body.prototype.update = function(dt) {
 
 	// 算位置
 	var dx = dt * this.vx;
-	this.tryMoveX(dx);
+	var realDx = this.tryMoveX(dx);
 
 	var dy = dt * this.vy;
-	this.tryMoveY(dy);
-
-	cc.log(this.x);
-
-	//if (this.debug)
-	//	cc.log(isBodyCollision({leftDown:{x:59,y:74},rightTop:{x:149,y:113}}, this));
+	var realDy = this.tryMoveY(dy);
 
 	this.updateCollision();
 	if (this.collisionFlag.down) {
 		this.vy = 0;
 	}
+	// 头撞墙之后要立刻下降
+	if (this.collisionFlag.top) {
+		this.vy = g_g * dt;
+	}
+
+	//if (this.debug)
+	//	cc.log(isBodyCollision({leftDown:{x:59,y:74},rightTop:{x:149,y:113}}, this));
+
 };
 
 Body.prototype.updateCollision = function() {
