@@ -44,7 +44,8 @@
             'src/RoleSprite.js',
             'src/util.js',
             'src/Animate.js',
-            'src/PhysicsEngine.js'
+            'src/PhysicsEngine.js',
+            'src/Background.js'
         ]
     };
 
