@@ -11,18 +11,23 @@ var GameLayer = cc.Layer.extend({
 	space:null,
 	map:null,
 	wall:null,
-	init:function() {
+	level:null,
+	init:function(level) {
 		this._super();
 
+		this.level = level;
+		this.loadLevel();
+		this.setKeyboardEnabled(true);
+		this.scheduleUpdate();
+	},
+	loadLevel:function() {
 		this.initBackground();
 		this.initPhysics();
 		this.initMap();	
 		this.initRole();
-		this.setKeyboardEnabled(true);
-		this.scheduleUpdate();
 	},
 	initMap:function() {
-		this.map = cc.TMXTiledMap.create(s_map);
+		this.map = cc.TMXTiledMap.create(this.level.map);
 		// wall
 		this.wall = new Array();
 		var wallGroup = this.map.getObjectGroup("wall").getObjects();
@@ -30,7 +35,7 @@ var GameLayer = cc.Layer.extend({
 			var w = wallGroup[i];
 			var x = w['x'];
 			var y = w['y'];
-			var wall = cc.Sprite.create(s_grass);
+			var wall = cc.Sprite.create(this.level.rock);
 			wall.setAnchorPoint(cc.p(0, 0));
 			wall.setPosition(x, y);
 			this.addChild(wall);
@@ -49,7 +54,7 @@ var GameLayer = cc.Layer.extend({
 		this.addChild(this.role);
 	},
 	initBackground:function() {
-		this.background = new Background(this, s_springback0, s_springback1, s_springback2);
+		this.background = new Background(this, this.level.bg0, this.level.bg1, this.level.bg2, this.level.bgAutoMove);
 	},
 	// 设计原则：不管如何操作时间，update都必须要调用
 	update:function(dt) {
@@ -89,6 +94,15 @@ var GameLayer = cc.Layer.extend({
 			case cc.KEY.x:  	// 调试
 				this.role.body.setPosition(Math.random() * this.map.getMapSize().width, Math.random() * this.map.getMapSize().height);
 				break;
+			case cc.KEY.w:      // load level调试
+				this.level = level2;
+				this.loadLevel();
+				break;
+			case cc.KEY.q:
+				this.level = level1;
+				this.loadLevel();
+				break;
+		
 		}
 	},
 	onKeyUp:function(key) {

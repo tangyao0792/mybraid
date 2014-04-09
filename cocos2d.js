@@ -45,7 +45,8 @@
             'src/util.js',
             'src/Animate.js',
             'src/PhysicsEngine.js',
-            'src/Background.js'
+            'src/Background.js',
+            'src/level.js'
         ]
     };
 

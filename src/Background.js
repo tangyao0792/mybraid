@@ -1,5 +1,6 @@
-function Background(layer, src1, src2, src3) {
+function Background(layer, src1, src2, src3, autoMove) {
 	this.layer = layer;
+	this.autoMove = autoMove;
 	this.initSprite(src1, src2, src3);
 }
 
@@ -20,7 +21,6 @@ Background.prototype.initSprite = function(src1, src2, src3) {
 	this.layer.addChild(this.bg2);
 	this.layer.addChild(this.bg1);
 	this.layer.addChild(this.bg0);
-
 };
 
 // 根据role的x坐标算bg0, bg1的位置，根据g_worldTime和role的x算bg2的位置
@@ -38,15 +38,15 @@ Background.prototype.update = function(x) {
 
 	// bg2
 	var range = this.bg2.getContentSize().width - this.layer.map.getMapSize().width;
-	if (range > 0) {
+	var offsetX = 0;
+	if (range > 0 && this.autoMove) {
 		var ratio = 10;
 		var time = parseInt(g_worldTime * ratio / range);
-		var offsetX = 0;
 		if (time % 2 == 0) {
 			offsetX = g_worldTime * ratio % range;
 		} else {
 			offsetX = range - (g_worldTime  * ratio % range);
 		}
-		this.bg2.setPositionX(eyeX - offsetX);
 	}
+	this.bg2.setPositionX(eyeX - offsetX);
 };
