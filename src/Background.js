@@ -30,8 +30,8 @@ Background.prototype.update = function(x) {
 	if (eyeX < 0) {
 		eyeX = 0;
 	}
-	if (eyeX > this.layer.map.getMapSize().width - g_screenWidth * 1.5) {
-		eyeX = this.layer.map.getMapSize().width - g_screenWidth * 1.5;
+	if (eyeX > this.layer.map.getMapSize().width - g_screenWidth * 1) {
+		eyeX = this.layer.map.getMapSize().width - g_screenWidth * 1;
 	}
 	this.bg0.setPositionX(eyeX * 0.3);
 	this.bg1.setPositionX(eyeX * 0.7);

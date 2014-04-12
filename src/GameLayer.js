@@ -21,6 +21,7 @@ var GameLayer = cc.Layer.extend({
 		this.scheduleUpdate();
 	},
 	loadLevel:function() {
+
 		this.initBackground();
 		this.initPhysics();
 		this.initMap();	
@@ -28,6 +29,7 @@ var GameLayer = cc.Layer.extend({
 	},
 	initMap:function() {
 		this.map = cc.TMXTiledMap.create(this.level.map);
+		this.space.setBorder(this.map.getMapSize().width, this.map.getMapSize().height);
 		// wall
 		this.wall = new Array();
 		var wallGroup = this.map.getObjectGroup("wall").getObjects();
@@ -42,6 +44,7 @@ var GameLayer = cc.Layer.extend({
 
 			var body = new Body(wall, null, this.space, {width : w['width'], height:w['height'] - 20}, {x : x, y : y}, true);
 		}
+
 	},
 	initPhysics:function() {
 		this.space = new Space();
@@ -72,8 +75,8 @@ var GameLayer = cc.Layer.extend({
 		if (eyeX < 0) {
 			eyeX = 0;
 		}
-		if (eyeX > this.map.getMapSize().width - g_screenWidth * 1.5) {
-			eyeX = this.map.getMapSize().width - g_screenWidth * 1.5;
+		if (eyeX > this.map.getMapSize().width - g_screenWidth * 1) {
+			eyeX = this.map.getMapSize().width - g_screenWidth * 1;
 		}
 		var camera = this.getCamera();
 		var eyeZ = cc.Camera.getZEye();

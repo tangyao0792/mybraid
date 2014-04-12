@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="3072" height="500" tilewidth="1" tileheight="1">
- <objectgroup name="wall" width="3072" height="500">
+<map version="1.0" orientation="orthogonal" width="1536" height="500" tilewidth="1" tileheight="1">
+ <objectgroup name="wall" width="1536" height="500">
   <object x="46" y="436" width="90" height="39"/>
   <object x="136" y="436" width="90" height="39"/>
   <object x="316" y="436" width="90" height="39"/>
@@ -28,21 +28,5 @@
   <object x="1173" y="167" width="90" height="39"/>
   <object x="1319" y="167" width="90" height="39"/>
   <object x="59" y="387" width="90" height="39"/>
-  <object x="1935" y="436" width="90" height="39"/>
-  <object x="2205" y="436" width="90" height="39"/>
-  <object x="1665" y="436" width="90" height="39"/>
-  <object x="2295" y="436" width="90" height="39"/>
-  <object x="1755" y="436" width="90" height="39"/>
-  <object x="2564" y="436" width="90" height="39"/>
-  <object x="2025" y="436" width="90" height="39"/>
-  <object x="1575" y="436" width="90" height="39"/>
-  <object x="2744" y="436" width="90" height="39"/>
-  <object x="2654" y="436" width="90" height="39"/>
-  <object x="2834" y="436" width="90" height="39"/>
-  <object x="2115" y="436" width="90" height="39"/>
-  <object x="1485" y="436" width="90" height="39"/>
-  <object x="2385" y="436" width="90" height="39"/>
-  <object x="1845" y="436" width="90" height="39"/>
-  <object x="2475" y="436" width="90" height="39"/>
  </objectgroup>
 </map>

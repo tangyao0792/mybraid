@@ -188,6 +188,20 @@ Body.prototype.tryMoveX = function(dx) {
 	if (dx < 0) {
 		step = -1;
 	}
+
+	if (this.space.hasBoder) {
+		if (dx < 0) {
+			var tmp = parseInt(this.space.minX - this.leftDown.x);
+			if (dx < tmp) {
+				dx = tmp;
+			}
+		} else {
+			var tmp = parseInt(this.space.maxX - this.rightTop.x);
+			if (dx > tmp) {
+				dx = tmp;
+			}
+		}
+	}
 	var move = 0;
 	while (move != dx) {
 		move += step;
@@ -225,6 +239,20 @@ Body.prototype.tryMoveY = function(dy) {
 	if (dy < 0) {
 		step = -1;
 	}
+
+	if (this.space.hasBoder) {
+		if (dy < 0) {
+			var tmp = parseInt(this.space.minY - this.leftDown.y);
+			if (dy < tmp) {
+				dy = tmp;
+			}
+		} else {
+			var tmp = parseInt(this.space.maxY - this.rightTop.y);
+			if (dy > tmp) {
+				dy = tmp;
+			}
+		}
+	}
 	var move = 0;
 	// TODO 把dx变成int
 	while (move != dy) {
@@ -261,8 +289,16 @@ Body.prototype.tryMoveY = function(dy) {
  */
 function Space() {
 	this.bodies = new Array();
+	this.hasBoder = false;
 }
 
+Space.prototype.setBorder = function(mapWidth, mapHeight) {
+	this.hasBoder = true;
+	this.minX = 0;
+	this.minY = 0;
+	this.maxX = mapWidth;
+	this.maxY = mapHeight;
+};
 Space.prototype.update = function(dt) {
 	for (i in this.bodies) {
 		var body = this.bodies[i];
