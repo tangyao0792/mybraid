@@ -69,6 +69,7 @@ function Body(sprite, collisionCallback, space, contentSize, p, isStatic) {
 	this.collisionCallback = collisionCallback;
 	this.space = space;
 	this.isStatic = isStatic;
+	this.baseVx = 0;		// 地面移动速度
 	this.vx = 0;
 	this.vy = 0;
 	this.ax = 0;
@@ -104,7 +105,7 @@ Body.prototype.update = function(dt) {
 		this.vy += this.ay * dt;
 
 		// 算位置
-		var dx = dt * this.vx;
+		var dx = dt * (this.vx + this.baseVx);
 		var realDx = this.tryMoveX(dx);
 
 		var dy = dt * this.vy;
@@ -284,22 +285,54 @@ Body.prototype.tryMoveY = function(dy) {
 	return move;
 };
 
-function MoveRockBody(sprite, space, toLeft, toRight, contentSize, p, vx) {
+/**
+ * 自动移动的rock，timeType:0 正常，1不受暂停影响， 2暂停的时候才会动
+ */
+function MoveRockBody(sprite, space, toLeft, toRight, contentSize, p, vx, timeType) {
 	this.sprite = sprite;
 	this.space = space;
-	this.toLeft = toLeft;
-	this.toRight = toRight;
+	this.toLeft = - parseInt(toLeft) + p.x;
+	this.toRight = parseInt(toRight) + p.x;
 	this.vx = vx;
 	this.x = p.x;
 	this.y = p.y;
+	this.timeType = timeType;
 	this.leftDown = {x : this.x, y : this.y};
 	this.rightTop = {x : contentSize.width + this.x, y : contentSize.height + this.y};
 	this.width = contentSize.width;
 	this.height = contentSize.height;
 	this.space.addBody(this);
 	this.setPosition(this.x, this.y);
+	this.isMoving = true;
 }
 
+MoveRockBody.prototype.update = function(dt) {
+	this.isMoving = false;
+	if (this.timeType == 0) {
+		if (g_pauseWorld) {
+			return;
+		}
+	} else if (this.timeType == 1) {
+		// pass
+	} else if (this.timeType == 2) {
+		if (!g_pauseWorld) {
+			return;
+		}
+	}
+	this.isMoving = true;
+	var dx = dt * this.vx;
+	var realDx = this.tryMoveX(dx);
+	if (this.x >= this.toRight) {
+		this.vx = -this.vx;
+	}
+	if (this.x <= this.toLeft) {
+		this.vx = -this.vx;
+	}
+};
+
+MoveRockBody.prototype.tryMoveX = Body.prototype.tryMoveX;
+
+MoveRockBody.prototype.setPosition = Body.prototype.setPosition;
 
 
 // TODO static body 

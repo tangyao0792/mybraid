@@ -107,12 +107,19 @@ function RoleCollisionListener(roleBody, body) {
 		if (role.state.stand) {
 			role.body.vx = 0;
 			role.setAnimate(role.standAnimate);
+			if (body.isMoving) {
+				roleBody.baseVx = body.vx;
+			} else {
+				roleBody.baseVx = 0;
+			}
 		} else if (role.state.runRight) {
 			role.body.vx = g_runVel;
 			role.setAnimate(role.runAnimate);
+			roleBody.baseVx = 0;
 		} else {
 			role.body.vx = -g_runVel;
 			role.setAnimate(role.runAnimate);
+			roleBody.baseVx = 0;
 		}
 	}
 }

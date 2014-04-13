@@ -16,15 +16,31 @@ var GameLayer = cc.Layer.extend({
 	map:null,
 	wall:null,
 	level:null,
-	scene:null,
-	init:function(scene, level) {
+	coverLayer:null,
+	covered:false,
+	init:function( level) {
 		this._super();
 
-		this.scene = scene;
 		this.level = level;
 		this.loadLevel();
 		this.setKeyboardEnabled(true);
 		this.scheduleUpdate();
+
+		this.coverLayer = cc.LayerColor.create(cc.c4(0, 0, 10, 100), this.map.getMapSize().width, this.map.getMapSize().height);
+	},
+	cover:function() {
+		if (this.covered) {
+			return;
+		}
+		this.covered = true;
+		this.addChild(this.coverLayer);
+	},
+	uncover:function() {
+		if (!this.covered) {
+			return;
+		}
+		this.covered = false;
+		this.removeChild(this.coverLayer);
 	},
 	loadLevel:function() {
 
@@ -50,19 +66,25 @@ var GameLayer = cc.Layer.extend({
 			var body = new Body(wall, null, this.space, {width : w['width'], height:w['height'] - 20}, {x : x, y : y}, true);
 		}
 
-/*		var moveRock = this.map.getObjectGroup("moveRock").getObjects();
-		for (var i in moveRock) {
-			var w = moveRock[i];
-			var x = w['x'];
-			var y = w['y'];
-			var wall = cc.Sprite.create(this.level.moveRock);
-			wall.setAnchorPoint(cc.p(0, 0));
-			wall.setPosition(x, y);
-			this.addChild(wall);
+		if (this.map.getObjectGroup("moveRock") != null) {
+			var moveRock = this.map.getObjectGroup("moveRock").getObjects();
+			for (var i in moveRock) {
+				var w = moveRock[i];
+				var x = w['x'];
+				var y = w['y'];
+				var wall = cc.Sprite.create(this.level.moveRock);
+				wall.setAnchorPoint(cc.p(0, 0));
+				wall.setPosition(x, y);
+				this.addChild(wall);
 
-			var body = new Body(wall, null, this.space, {width : w['width'], height:w['height'] - 20}, {x : x, y : y}, true);
+				if (w['timeType'] != 0) {
+					wall.setZOrder(1);
+				}
+				var body = new MoveRockBody(wall, this.space, w['toLeft'], w['toRight'], {width : w['width'],
+						 height:w['height'] - 20}, {x : x, y : y}, 100, w['timeType']);
+			}
 		}
-*/
+
 	},
 	initPhysics:function() {
 		this.space = new Space();
@@ -70,6 +92,7 @@ var GameLayer = cc.Layer.extend({
 	initRole:function() {
 		this.role = new RoleSprite(s_c_stand0, this.space, cc.p(100, 300));
 		this.role.setAnchorPoint(cc.p(0, 0));
+		this.role.setZOrder(2);
 
         var s = cc.Director.getInstance().getWinSize();
 		this.addChild(this.role);
@@ -103,11 +126,11 @@ var GameLayer = cc.Layer.extend({
 		camera.setCenter(eyeX, 0, 0);	
 	},
 	stopWorld:function() {
-		this.scene.cover();
+		this.cover();
 		g_pauseWorld = true;
 	},
 	resumeWorld:function() {
-		this.scene.uncover();
+		this.uncover();
 		g_pauseWorld = false;
 	},
 	onKeyDown:function(key) {

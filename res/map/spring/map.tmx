@@ -30,8 +30,23 @@
   <object x="75" y="684" width="90" height="39"/>
  </objectgroup>
  <objectgroup name="moveRock" width="1536" height="800">
-  <object x="1059" y="544" width="90" height="39">
+  <object x="1124" y="545" width="90" height="39">
    <properties>
+    <property name="timeType" value="1"/>
+    <property name="toLeft" value="100"/>
+    <property name="toRight" value="100"/>
+   </properties>
+  </object>
+  <object x="1218" y="315" width="90" height="39">
+   <properties>
+    <property name="timeType" value="2"/>
+    <property name="toLeft" value="100"/>
+    <property name="toRight" value="100"/>
+   </properties>
+  </object>
+  <object x="876" y="641" width="90" height="39">
+   <properties>
+    <property name="timeType" value="0"/>
     <property name="toLeft" value="100"/>
     <property name="toRight" value="100"/>
    </properties>
