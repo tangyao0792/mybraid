@@ -75,8 +75,8 @@ var GameLayer = cc.Layer.extend({
 		if (eyeX < 0) {
 			eyeX = 0;
 		}
-		if (eyeX > this.map.getMapSize().width - g_screenWidth * 1) {
-			eyeX = this.map.getMapSize().width - g_screenWidth * 1;
+		if (eyeX > this.map.getMapSize().width - g_screenWidth * 1.2) {
+			eyeX = this.map.getMapSize().width - g_screenWidth * 1.2;
 		}
 		var camera = this.getCamera();
 		var eyeZ = cc.Camera.getZEye();
