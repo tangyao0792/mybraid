@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="3072" height="500" tilewidth="1" tileheight="1">
- <objectgroup name="wall" width="3072" height="500">
+ <objectgroup name="rock" width="3072" height="500">
   <object x="46" y="436" width="90" height="39"/>
   <object x="136" y="436" width="90" height="39"/>
   <object x="316" y="436" width="90" height="39"/>
@@ -45,4 +45,5 @@
   <object x="1845" y="436" width="90" height="39"/>
   <object x="2475" y="436" width="90" height="39"/>
  </objectgroup>
+ <objectgroup name="对象层 2" width="3072" height="500"/>
 </map>

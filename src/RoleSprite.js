@@ -2,9 +2,11 @@ var RoleSprite = cc.Sprite.extend({
 	space:null,
 	standAnimate:null,
 	runAnimate:null,
+	jumpAnimate:null,
 	animate:null,
 	currentFrame:null,
 	body:null,
+	state:{stand:true, runLeft:false, runRight:false},
 	ctor:function(src, space, p) {
 		this._super();
 		this.initWithFile(src);
@@ -19,13 +21,11 @@ var RoleSprite = cc.Sprite.extend({
 		this.scheduleUpdate();
 
 	},
-	collisionListener:function(body) {
-	},
 	initPhycics:function(p) {
 		var width = this._contentSize._width;
         var height = this._contentSize._height;
 
-        this.body = new Body(this, this.collisionListener, this.space, {width : width, height : height}, p, false);
+        this.body = new Body(this, RoleCollisionListener, this.space, {width : width, height : height}, p, false);
         this.body.debug = true;
         this.body.ay = g_g;
 
@@ -42,33 +42,77 @@ var RoleSprite = cc.Sprite.extend({
 		for (var i in runAnimation) {
 			this.runAnimate.addFrameWithFilename(runAnimation[i]);
 		}
+
+		this.jumpAnimate = new Animate(this);
+		this.jumpAnimate.setDelayUnit(1.0 / 4);
+		this.jumpAnimate.addFrameWithFilename(s_c_jump0);
+		this.jumpAnimate.addFrameWithFilename(s_c_jump0);
+
 	},
 	setAnimate:function(animate) {
 		this.animate = animate;
 	},
 	runAnimation:function() {
-		this.animate.play();
+		if (!g_pauseWorld) {
+			this.animate.play();
+		}
 	},
 	update:function(dt) {
+		if (!this.touchGround()) {
+			this.setAnimate(this.jumpAnimate);
+		}
+		if (!g_pauseWorld) {
+			if (this.state.runLeft) {
+				this.setFlippedX(false);
+			} else if (this.state.runRight) {
+				this.setFlippedX(true);
+			}
+		}
 		this.runAnimation();
 	},
 	stand:function() {
-		this.setAnimate(this.standAnimate);
-		this.body.vx = 0;
+		this.state.stand = true;
+		this.state.runLeft = false;
+		this.state.runRight = false;
 	},
 	runLeft:function() {
-		this.setFlippedX(false);
-		this.setAnimate(this.runAnimate);		
-		this.body.vx = -g_runVel;
+		if (this.state.runLeft) {
+			return;
+		}
+		this.state.stand = false;
+		this.state.runLeft = true;
+		this.state.runRight = false;
 	},
 	runRight:function() {
-		this.setFlippedX(true);
-		this.setAnimate(this.runAnimate);
-		this.body.vx = g_runVel;
+		if (this.state.runRight) {
+			return;
+		}
+		this.state.stand = false;
+		this.state.runLeft = false;
+		this.state.runRight = true;
 	},
 	jump:function() {
-		if (this.body.collisionFlag.down) {
+		if (this.touchGround()) {
 			this.body.vy += g_jumpVel;
 		}
+	},
+	touchGround:function() {
+		return this.body.collisionFlag.down;
 	}
 });
+
+function RoleCollisionListener(roleBody, body) {
+	var role = roleBody.sprite;
+	if (role.touchGround()) {
+		if (role.state.stand) {
+			role.body.vx = 0;
+			role.setAnimate(role.standAnimate);
+		} else if (role.state.runRight) {
+			role.body.vx = g_runVel;
+			role.setAnimate(role.runAnimate);
+		} else {
+			role.body.vx = -g_runVel;
+			role.setAnimate(role.runAnimate);
+		}
+	}
+}

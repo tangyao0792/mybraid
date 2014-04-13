@@ -98,16 +98,19 @@ Body.prototype.setPosition = function(x, y) {
 };
 
 Body.prototype.update = function(dt) {
-	// 更新速度
-	this.vx += this.ax * dt;
-	this.vy += this.ay * dt;
+	if (!g_pauseWorld) {
+		// 更新速度
+		this.vx += this.ax * dt;
+		this.vy += this.ay * dt;
 
-	// 算位置
-	var dx = dt * this.vx;
-	var realDx = this.tryMoveX(dx);
+		// 算位置
+		var dx = dt * this.vx;
+		var realDx = this.tryMoveX(dx);
 
-	var dy = dt * this.vy;
-	var realDy = this.tryMoveY(dy);
+		var dy = dt * this.vy;
+		var realDy = this.tryMoveY(dy);
+
+	}
 
 	this.updateCollision();
 	if (this.collisionFlag.down) {
@@ -174,7 +177,7 @@ Body.prototype.updateCollision = function() {
 		}
 		// 碰撞回调函数
 		if (collision && this.collisionCallback != null) {
-			this.collisionCallback(body);
+			this.collisionCallback(this, body);
 		}
 	}
 };
@@ -281,6 +284,24 @@ Body.prototype.tryMoveY = function(dy) {
 	return move;
 };
 
+function MoveRockBody(sprite, space, toLeft, toRight, contentSize, p, vx) {
+	this.sprite = sprite;
+	this.space = space;
+	this.toLeft = toLeft;
+	this.toRight = toRight;
+	this.vx = vx;
+	this.x = p.x;
+	this.y = p.y;
+	this.leftDown = {x : this.x, y : this.y};
+	this.rightTop = {x : contentSize.width + this.x, y : contentSize.height + this.y};
+	this.width = contentSize.width;
+	this.height = contentSize.height;
+	this.space.addBody(this);
+	this.setPosition(this.x, this.y);
+}
+
+
+
 // TODO static body 
 
 /**
@@ -302,7 +323,7 @@ Space.prototype.setBorder = function(mapWidth, mapHeight) {
 Space.prototype.update = function(dt) {
 	for (i in this.bodies) {
 		var body = this.bodies[i];
-		if (!body.isStatic)
+		if (!body.isStatic)		// 效率原因
 			body.update(dt);
 	}
 };

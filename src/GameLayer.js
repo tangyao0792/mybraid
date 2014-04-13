@@ -1,10 +1,14 @@
 g_pauseWorld = false;
-g_worldTime = 0.0;
-g_g = -1800;	// 重力加速度g
-g_runVel = 150;
-g_jumpVel = 600;
+g_worldTime = 0.0;	// 会被暂停
+g_realTime = 0.0;	// 真正的时间，不会暂停
 
-g_screenWidth = 800;
+g_g = -1800;		// 重力加速度g
+g_runVel = 180;
+g_jumpVel = 600;
+g_moveRockVel = 100;
+
+g_screenWidth = 960;
+g_screenHeight = 600;
 
 var GameLayer = cc.Layer.extend({
 	role:null,
@@ -12,9 +16,11 @@ var GameLayer = cc.Layer.extend({
 	map:null,
 	wall:null,
 	level:null,
-	init:function(level) {
+	scene:null,
+	init:function(scene, level) {
 		this._super();
 
+		this.scene = scene;
 		this.level = level;
 		this.loadLevel();
 		this.setKeyboardEnabled(true);
@@ -31,8 +37,7 @@ var GameLayer = cc.Layer.extend({
 		this.map = cc.TMXTiledMap.create(this.level.map);
 		this.space.setBorder(this.map.getMapSize().width, this.map.getMapSize().height);
 		// wall
-		this.wall = new Array();
-		var wallGroup = this.map.getObjectGroup("wall").getObjects();
+		var wallGroup = this.map.getObjectGroup("rock").getObjects();
 		for (var i in wallGroup) {
 			var w = wallGroup[i];
 			var x = w['x'];
@@ -45,6 +50,19 @@ var GameLayer = cc.Layer.extend({
 			var body = new Body(wall, null, this.space, {width : w['width'], height:w['height'] - 20}, {x : x, y : y}, true);
 		}
 
+/*		var moveRock = this.map.getObjectGroup("moveRock").getObjects();
+		for (var i in moveRock) {
+			var w = moveRock[i];
+			var x = w['x'];
+			var y = w['y'];
+			var wall = cc.Sprite.create(this.level.moveRock);
+			wall.setAnchorPoint(cc.p(0, 0));
+			wall.setPosition(x, y);
+			this.addChild(wall);
+
+			var body = new Body(wall, null, this.space, {width : w['width'], height:w['height'] - 20}, {x : x, y : y}, true);
+		}
+*/
 	},
 	initPhysics:function() {
 		this.space = new Space();
@@ -64,6 +82,7 @@ var GameLayer = cc.Layer.extend({
 		if (!g_pauseWorld) {
 			g_worldTime += dt;
 		}	
+		g_realTime += dt;
 		this.space.update(dt);
 
 		this.updateCamera(this.role.getPositionX());
@@ -75,13 +94,21 @@ var GameLayer = cc.Layer.extend({
 		if (eyeX < 0) {
 			eyeX = 0;
 		}
-		if (eyeX > this.map.getMapSize().width - g_screenWidth * 1.2) {
-			eyeX = this.map.getMapSize().width - g_screenWidth * 1.2;
+		if (eyeX > this.map.getMapSize().width - g_screenWidth) {
+			eyeX = this.map.getMapSize().width - g_screenWidth;
 		}
 		var camera = this.getCamera();
 		var eyeZ = cc.Camera.getZEye();
 		camera.setEye(eyeX, 0, eyeZ);
 		camera.setCenter(eyeX, 0, 0);	
+	},
+	stopWorld:function() {
+		this.scene.cover();
+		g_pauseWorld = true;
+	},
+	resumeWorld:function() {
+		this.scene.uncover();
+		g_pauseWorld = false;
 	},
 	onKeyDown:function(key) {
 		switch(key) {
@@ -94,9 +121,17 @@ var GameLayer = cc.Layer.extend({
 			case cc.KEY.up:
 				this.role.jump();
 				break;
-			case cc.KEY.x:  	// 调试
+			case cc.KEY.c:
+				this.role.jump();
+				break;
+			case cc.KEY.x:
+				this.stopWorld();
+				break;
+
+			case cc.KEY.d:  	// 调试
 				this.role.body.setPosition(Math.random() * this.map.getMapSize().width, Math.random() * this.map.getMapSize().height);
 				break;
+
 			case cc.KEY.w:      // load level调试
 				this.level = level2;
 				this.loadLevel();
@@ -115,6 +150,9 @@ var GameLayer = cc.Layer.extend({
 				break;
 			case cc.KEY.right:
 				this.role.stand();
+				break;
+			case cc.KEY.x:
+				this.resumeWorld();
 				break;
 		}
 	}

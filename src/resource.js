@@ -13,6 +13,8 @@ var s_molten_rock = "res/map/molten/rock.png";
 
 var s_c_stand0 = "res/stand0.png";
 
+var s_c_jump0 = "res/jump.png";
+
 var standAnimation = new Array();
 for (var i = 0; i < 8; i++) {
     standAnimation[i] = "res/stand" + i + ".png";
@@ -24,6 +26,7 @@ for (var i = 0; i < 4; i++) {
 }
 
 var g_resources = [
+    {src:s_c_jump0},
     {src:s_spring_map},
     {src:s_spring_bg0},
     {src:s_spring_bg1},

@@ -5,7 +5,7 @@
  	spriteFrame:null,
  	delayUnit:0,
  	totalUnit:0,
- 	currentIndex:0,
+ 	currentIndex:-1,
  	target:null,
  	ctor:function(target) {
  		this.target = target;
