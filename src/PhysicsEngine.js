@@ -164,7 +164,7 @@ Body.prototype.updateCollision = function() {
 
 		if (isBodyCollision(box, body)) {
 			this.collisionFlag.top = true;
-			collosion = true;
+			collision = true;
 		}
 
 		box = {
@@ -174,7 +174,7 @@ Body.prototype.updateCollision = function() {
 
 		if (isBodyCollision(box, body)) {
 			this.collisionFlag.right = true;
-			collosion = true;
+			collision = true;
 		}
 		// 碰撞回调函数
 		if (collision && this.collisionCallback != null) {
@@ -293,6 +293,7 @@ function MoveRockBody(sprite, space, toLeft, toRight, contentSize, p, vx, timeTy
 	this.space = space;
 	this.toLeft = - parseInt(toLeft) + p.x;
 	this.toRight = parseInt(toRight) + p.x;
+	this.v = vx;
 	this.vx = vx;
 	this.x = p.x;
 	this.y = p.y;
@@ -323,10 +324,10 @@ MoveRockBody.prototype.update = function(dt) {
 	var dx = dt * this.vx;
 	var realDx = this.tryMoveX(dx);
 	if (this.x >= this.toRight) {
-		this.vx = -this.vx;
+		this.vx = -this.v;
 	}
 	if (this.x <= this.toLeft) {
-		this.vx = -this.vx;
+		this.vx = this.v;
 	}
 };
 
@@ -344,6 +345,7 @@ MoveRockBody.prototype.setPosition = Body.prototype.setPosition;
 function Space() {
 	this.bodies = new Array();
 	this.hasBoder = false;
+	this.toRemove = new Array();
 }
 
 Space.prototype.setBorder = function(mapWidth, mapHeight) {
@@ -354,9 +356,17 @@ Space.prototype.setBorder = function(mapWidth, mapHeight) {
 	this.maxY = mapHeight;
 };
 Space.prototype.update = function(dt) {
+	for (var i in this.toRemove) {
+		var body = this.toRemove[i];
+		this.bodies = this.bodies.filter(function(x) {
+			return x != body;
+		});
+	}
+	this.toRemove = new Array();
+
 	for (i in this.bodies) {
 		var body = this.bodies[i];
-		if (!body.isStatic)		// 效率原因
+		if (!body.isStatic && !body.isItem)		// 效率原因
 			body.update(dt);
 	}
 };
@@ -364,3 +374,8 @@ Space.prototype.update = function(dt) {
 Space.prototype.addBody = function(body) {
 	this.bodies.push(body);
 };
+
+// 为了保证bodies的顺序，惰性删除
+Space.prototype.removeBody = function(body) {
+	this.toRemove.push(body);
+}

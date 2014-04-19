@@ -4,13 +4,12 @@ var RoleSprite = cc.Sprite.extend({
 	runAnimate:null,
 	jumpAnimate:null,
 	animate:null,
-	currentFrame:null,
 	body:null,
 	state:{stand:true, runLeft:false, runRight:false},
-	ctor:function(src, space, p) {
+	layer:null,
+	ctor:function(src, space, p, layer) {
 		this._super();
 		this.initWithFile(src);
-		this.currentFrame = src;
         this.setAnchorPoint(cc.p(0, 0));
 		this.space = space;
 
@@ -18,8 +17,9 @@ var RoleSprite = cc.Sprite.extend({
 		this.initAnimate();
 		this.setAnimate(this.standAnimate);
 
-		this.scheduleUpdate();
+		this.layer = layer;
 
+		this.scheduleUpdate();
 	},
 	initPhycics:function(p) {
 		var width = this._contentSize._width;
@@ -98,8 +98,25 @@ var RoleSprite = cc.Sprite.extend({
 	},
 	touchGround:function() {
 		return this.body.collisionFlag.down;
+	},
+	pick:function(itemSprite) {
+		var id = itemSprite.id;
+	
+		var to = cc.p(g_magicBucket_x + parseInt(id) * g_magicBucket_step + this.layer.eyeX, g_magicBucket_y);
+		var actionTo = cc.MoveTo.create(0.6, to);
+		var action = cc.Sequence.create(
+			actionTo,
+			cc.CallFunc.create(MoveToListener, itemSprite, this.layer.statusLayer)
+		);
+		itemSprite.runAction(action);		
+		itemSprite.removeSelf();
 	}
 });
+
+function MoveToListener(item, statusLayer) {
+	item.parant.removeChild(item);
+	statusLayer.enableItem(item);
+}
 
 function RoleCollisionListener(roleBody, body) {
 	var role = roleBody.sprite;
@@ -121,5 +138,8 @@ function RoleCollisionListener(roleBody, body) {
 			role.setAnimate(role.runAnimate);
 			roleBody.baseVx = 0;
 		}
+	}
+	if (body.isItem) {
+		role.pick(body.sprite);
 	}
 }

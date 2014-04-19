@@ -46,7 +46,10 @@
             'src/Animate.js',
             'src/PhysicsEngine.js',
             'src/Background.js',
-            'src/Level.js'
+            'src/Level.js',
+            'src/ItemSprite.js',
+            'src/StatusLayer.js',
+            'src/global.js'
         ]
     };
 

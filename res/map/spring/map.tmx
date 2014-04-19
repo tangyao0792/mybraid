@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="1536" height="800" tilewidth="1" tileheight="1">
- <objectgroup name="rock" width="1536" height="800">
+<map version="1.0" orientation="orthogonal" width="3072" height="800" tilewidth="1" tileheight="1">
+ <objectgroup name="rock" width="3072" height="800">
   <object x="62" y="733" width="90" height="39"/>
   <object x="152" y="733" width="90" height="39"/>
   <object x="332" y="733" width="90" height="39"/>
@@ -17,39 +17,107 @@
   <object x="1141" y="733" width="90" height="39"/>
   <object x="1411" y="733" width="90" height="39"/>
   <object x="1321" y="733" width="90" height="39"/>
-  <object x="586" y="526" width="90" height="39"/>
-  <object x="496" y="526" width="90" height="39"/>
-  <object x="766" y="526" width="90" height="39"/>
-  <object x="676" y="526" width="90" height="39"/>
-  <object x="211" y="620" width="90" height="39"/>
-  <object x="353" y="560" width="90" height="39"/>
-  <object x="907" y="466" width="90" height="39"/>
-  <object x="1052" y="398" width="90" height="39"/>
-  <object x="880" y="332" width="90" height="39"/>
-  <object x="1427" y="519" width="90" height="39"/>
-  <object x="75" y="684" width="90" height="39"/>
+  <object x="1797" y="438" width="90" height="39"/>
+  <object x="1861" y="733" width="90" height="39"/>
+  <object x="2491" y="733" width="90" height="39"/>
+  <object x="1951" y="733" width="90" height="39"/>
+  <object x="2760" y="733" width="90" height="39"/>
+  <object x="2221" y="733" width="90" height="39"/>
+  <object x="1681" y="733" width="90" height="39"/>
+  <object x="2850" y="733" width="90" height="39"/>
+  <object x="2311" y="733" width="90" height="39"/>
+  <object x="1771" y="733" width="90" height="39"/>
+  <object x="2580" y="733" width="90" height="39"/>
+  <object x="2041" y="733" width="90" height="39"/>
+  <object x="1591" y="733" width="90" height="39"/>
+  <object x="2670" y="733" width="90" height="39"/>
+  <object x="2131" y="733" width="90" height="39"/>
+  <object x="1501" y="733" width="90" height="39"/>
+  <object x="2401" y="733" width="90" height="39"/>
+  <object x="-28" y="733" width="90" height="39"/>
+  <object x="2941" y="733" width="90" height="39"/>
+  <object x="3031" y="733" width="90" height="39"/>
+  <object x="1071" y="366" width="90" height="39"/>
  </objectgroup>
- <objectgroup name="moveRock" width="1536" height="800">
-  <object x="1124" y="545" width="90" height="39">
+ <objectgroup name="moveRock" width="3072" height="800">
+  <object x="1494" y="464" width="90" height="39">
    <properties>
     <property name="timeType" value="1"/>
     <property name="toLeft" value="100"/>
     <property name="toRight" value="100"/>
    </properties>
   </object>
-  <object x="1218" y="315" width="90" height="39">
+  <object x="1588" y="234" width="90" height="39">
    <properties>
     <property name="timeType" value="2"/>
     <property name="toLeft" value="100"/>
     <property name="toRight" value="100"/>
    </properties>
   </object>
-  <object x="876" y="641" width="90" height="39">
+  <object x="1734" y="518" width="90" height="39">
    <properties>
     <property name="timeType" value="0"/>
     <property name="toLeft" value="100"/>
     <property name="toRight" value="100"/>
    </properties>
   </object>
+  <object x="336" y="450" width="90" height="39">
+   <properties>
+    <property name="timeType" value="0"/>
+    <property name="toLeft" value="100"/>
+    <property name="toRight" value="100"/>
+   </properties>
+  </object>
+  <object x="19" y="373" width="90" height="39">
+   <properties>
+    <property name="timeType" value="2"/>
+    <property name="toLeft" value="10"/>
+    <property name="toRight" value="100"/>
+   </properties>
+  </object>
+  <object x="549" y="448" width="90" height="39">
+   <properties>
+    <property name="timeType" value="0"/>
+    <property name="toLeft" value="100"/>
+    <property name="toRight" value="100"/>
+   </properties>
+  </object>
+  <object x="552" y="512" width="90" height="39">
+   <properties>
+    <property name="timeType" value="1"/>
+    <property name="toLeft" value="100"/>
+    <property name="toRight" value="100"/>
+   </properties>
+  </object>
+  <object x="868" y="448" width="90" height="39">
+   <properties>
+    <property name="timeType" value="0"/>
+    <property name="toLeft" value="100"/>
+    <property name="toRight" value="100"/>
+   </properties>
+  </object>
+  <object x="871" y="512" width="90" height="39">
+   <properties>
+    <property name="timeType" value="1"/>
+    <property name="toLeft" value="100"/>
+    <property name="toRight" value="100"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="item" width="3072" height="800">
+  <object name="m1" x="47" y="250" width="31" height="33"/>
+  <object name="m2" x="1105" y="298" width="31" height="33"/>
+  <object name="m3" x="1739" y="592" width="31" height="33"/>
+  <object name="m4" x="1834" y="586" width="31" height="33"/>
+  <object name="m5" x="1914" y="585" width="31" height="33"/>
+  <object name="m6" x="2011" y="590" width="31" height="33"/>
+  <object name="m7" x="1851" y="384" width="31" height="33"/>
+  <object name="m8" x="1443" y="259" width="31" height="33"/>
+  <object name="m9" x="1735" y="676" width="31" height="33"/>
+ </objectgroup>
+ <objectgroup name="smallRock" width="3072" height="800">
+  <object x="289" y="596" width="55" height="38"/>
+  <object x="170" y="652" width="55" height="38"/>
+  <object x="152" y="535" width="55" height="38"/>
  </objectgroup>
 </map>

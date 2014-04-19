@@ -5,7 +5,10 @@ var level1 = {
 	bg2:s_spring_bg2,
 	bgAutoMove:true,
 	rock:s_spring_rock,
-	moveRock:s_spring_rock
+	smallRock:s_spring_smallRock,
+	moveRock:s_spring_aotuMoveRock,
+	magic:s_spring_magic,
+	magicGrey:s_spring_magic_grey
 };
 
 
