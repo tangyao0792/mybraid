@@ -94,12 +94,14 @@ var RoleSprite = cc.Sprite.extend({
 	jump:function() {
 		if (this.touchGround()) {
 			this.body.vy += g_jumpVel;
+			this.layer.audioEngine.playJump();
 		}
 	},
 	touchGround:function() {
 		return this.body.collisionFlag.down;
 	},
 	pick:function(itemSprite) {
+		this.layer.audioEngine.playPick();
 		var id = itemSprite.id;
 	
 		var to = cc.p(g_magicBucket_x + parseInt(id) * g_magicBucket_step + this.layer.eyeX, g_magicBucket_y);
@@ -124,7 +126,8 @@ function RoleCollisionListener(roleBody, body) {
 		if (role.state.stand) {
 			role.body.vx = 0;
 			role.setAnimate(role.standAnimate);
-			if (body.isMoving) {
+			// TODO fix bug, 站在地上，和空中的移动物体碰撞，base速度会变
+			if (body.hasMoved) {
 				roleBody.baseVx = body.vx;
 			} else {
 				roleBody.baseVx = 0;

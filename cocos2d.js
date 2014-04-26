@@ -49,7 +49,8 @@
             'src/Level.js',
             'src/ItemSprite.js',
             'src/StatusLayer.js',
-            'src/global.js'
+            'src/global.js',
+            'src/AudioEngine.js'
         ]
     };
 

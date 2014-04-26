@@ -8,7 +8,8 @@ var level1 = {
 	smallRock:s_spring_smallRock,
 	moveRock:s_spring_aotuMoveRock,
 	magic:s_spring_magic,
-	magicGrey:s_spring_magic_grey
+	magicGrey:s_spring_magic_grey,
+	bgSound:s_spring_bgSound
 };
 
 

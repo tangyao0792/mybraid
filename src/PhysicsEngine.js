@@ -64,7 +64,7 @@ function isBodyCollision(b1, b2) {
  * @param contentSize {width:xxx, height:yyy}
  * @param p {x:xxx, y:yyy}
  */
-function Body(sprite, collisionCallback, space, contentSize, p, isStatic) {
+function Body(sprite, collisionCallback, space, contentSize, p, isStatic, isNpc) {
 	this.sprite = sprite;
 	this.collisionCallback = collisionCallback;
 	this.space = space;
@@ -83,7 +83,10 @@ function Body(sprite, collisionCallback, space, contentSize, p, isStatic) {
 	this.height = contentSize.height;
 	this.space.addBody(this);
 	this.setPosition(this.x, this.y);
-
+	this.isNpc = isNpc;
+	if (isNpc == null) {
+		this.isNpc = false;
+	}
 	// DEBUG
 	this.debug = false;
 }
@@ -220,6 +223,9 @@ Body.prototype.tryMoveX = function(dx) {
 			if (body == this)
 				continue;
 			if (isBodyCollision(box, body)) {
+				if (body.isNpc) {
+					continue;
+				}
 				foundCollision = true;
 				break;
 			}
@@ -305,9 +311,11 @@ function MoveRockBody(sprite, space, toLeft, toRight, contentSize, p, vx, timeTy
 	this.space.addBody(this);
 	this.setPosition(this.x, this.y);
 	this.isMoving = true;
+	this.hasMoved = false;
 }
 
 MoveRockBody.prototype.update = function(dt) {
+	this.isMoving = false;
 	this.isMoving = false;
 	if (this.timeType == 0) {
 		if (g_pauseWorld) {
@@ -323,6 +331,11 @@ MoveRockBody.prototype.update = function(dt) {
 	this.isMoving = true;
 	var dx = dt * this.vx;
 	var realDx = this.tryMoveX(dx);
+	if (realDx != 0) {
+		this.hasMoved = true;
+	} else {
+		this.hasMoved = false;
+	}
 	if (this.x >= this.toRight) {
 		this.vx = -this.v;
 	}

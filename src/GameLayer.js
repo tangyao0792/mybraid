@@ -8,6 +8,7 @@ var GameLayer = cc.Layer.extend({
 	covered:false,
 	statusLayer:null,
 	eyeX:0,
+	audioEngine:null,
 	init:function( level) {
 		this._super();
 
@@ -38,6 +39,12 @@ var GameLayer = cc.Layer.extend({
 		this.initPhysics();
 		this.initMap();	
 		this.initRole();
+		this.initAudio();
+	},
+	initAudio:function() {
+		this.audioEngine = new AudioEngine();
+		this.audioEngine.setBgSound(this.level.bgSound);
+		this.audioEngine.playBgSound();
 	},
 	initMap:function() {
 		this.map = cc.TMXTiledMap.create(this.level.map);
@@ -149,12 +156,18 @@ var GameLayer = cc.Layer.extend({
 		this.eyeX = eyeX;
 	},
 	stopWorld:function() {
+		if (g_pauseWorld) 
+			return;
 		this.cover();
 		g_pauseWorld = true;
+		this.audioEngine.pauseBgSound();
 	},
 	resumeWorld:function() {
+		if (!g_pauseWorld)
+			return;
 		this.uncover();
 		g_pauseWorld = false;
+		this.audioEngine.resumeBgSound();
 	},
 	onKeyDown:function(key) {
 		switch(key) {
