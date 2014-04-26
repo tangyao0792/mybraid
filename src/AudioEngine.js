@@ -20,8 +20,6 @@ AudioEngine.prototype.pauseBgSound = function() {
 };
 
 AudioEngine.prototype.resumeBgSound = function() {
-	cc.log(cc.AudioEngine.getInstance().getMusicVolume());
-	cc.log(cc.AudioEngine.getInstance().getMusicVolume());
 	cc.AudioEngine.getInstance().resumeMusic(this.bgSoundId);
 	cc.AudioEngine.getInstance().stopEffect(this.silenceId);
 	this.silenceId = -1;

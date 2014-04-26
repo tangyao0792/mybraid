@@ -111,7 +111,16 @@ var GameLayer = cc.Layer.extend({
 					}
 				}
 			}
+		}
 
+		if (this.map.getObjectGroup("NPC") != null) {
+			var npcs = this.map.getObjectGroup("NPC").getObjects();
+			for (var i in npcs) {
+				var n = npcs[i];
+				var name = n["name"];
+				var npc = new NPCSprite(g_npc_name[name], this.space, {x:n['x'], y:n['y']});
+				this.addChild(npc);
+			}
 		}
 
 	},
@@ -179,6 +188,9 @@ var GameLayer = cc.Layer.extend({
 				break;
 			case cc.KEY.up:
 				this.role.jump();
+				break;
+			case cc.KEY.down:
+				this.role.talk();
 				break;
 			case cc.KEY.c:
 				this.role.jump();

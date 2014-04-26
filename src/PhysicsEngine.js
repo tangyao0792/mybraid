@@ -141,6 +141,10 @@ Body.prototype.updateCollision = function() {
 		if (body == this)
 			continue;
 
+		if (body.isNpc) {
+			continue;
+		}
+
 		var box = {
 					leftDown : {x : this.leftDown.x, y : this.leftDown.y - 1}, 
 					rightTop : {x : this.rightTop.x, y : this.rightTop.y}
@@ -278,6 +282,9 @@ Body.prototype.tryMoveY = function(dy) {
 			if (body == this)
 				continue;
 			if (isBodyCollision(box, body)) {
+				if (body.isNpc) {
+					continue;
+				}
 				foundCollision = true;
 				break;
 			}
@@ -359,6 +366,7 @@ function Space() {
 	this.bodies = new Array();
 	this.hasBoder = false;
 	this.toRemove = new Array();
+	this.npc = new Array();
 }
 
 Space.prototype.setBorder = function(mapWidth, mapHeight) {
@@ -388,7 +396,22 @@ Space.prototype.addBody = function(body) {
 	this.bodies.push(body);
 };
 
+Space.prototype.addNPC = function(body) {
+	this.npc.push(body);
+};
+
 // 为了保证bodies的顺序，惰性删除
 Space.prototype.removeBody = function(body) {
 	this.toRemove.push(body);
 }
+
+Space.prototype.testNPCCollision = function(body) {
+	for (var i in this.npc) {
+		var npc = this.npc[i];
+		if (isBodyCollision(body, npc)) {
+			if (npc.collisionCallback != null) {
+				npc.collisionCallback();
+			}
+		}
+	}
+};

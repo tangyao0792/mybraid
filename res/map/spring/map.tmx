@@ -138,4 +138,11 @@
   <object x="1771" y="670" width="55" height="38"/>
   <object x="1651" y="585" width="55" height="38"/>
  </objectgroup>
+ <objectgroup name="NPC" width="3072" height="800">
+  <object x="609" y="663" width="56" height="88">
+   <properties>
+    <property name="name" value="old"/>
+   </properties>
+  </object>
+ </objectgroup>
 </map>

@@ -89,7 +89,13 @@ for (var i in s_spring_magic_grey) {
     g_resources.push({src:s_spring_magic_grey[i]});
 }
 
-// NPC
+s_npc_old = new Array();
+
 for (var i = 0; i < 12; i++) {
-    g_resources.push({src:"res/npc/old" + i + ".png"});
+    s_npc_old.push("res/npc/old/" + i + ".png");
+}
+
+// NPC
+for (var i in s_npc_old) {
+    g_resources.push({src : s_npc_old[i]});
 }
