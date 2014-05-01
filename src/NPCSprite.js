@@ -33,11 +33,3 @@ var NPCSprite = cc.Sprite.extend({
 		this.animate.play();
 	}
 });
-
-function ShowTalk() {
-	cc.log("talk");
-}
-
-
-var g_npc_name = new Array();
-g_npc_name["old"] = { src : s_npc_old, callback : ShowTalk};

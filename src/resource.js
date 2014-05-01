@@ -47,12 +47,17 @@ s_pick = "res/sound/pick.mp3";
 s_move = "res/map/spring/move.mp3";
 s_silence = "res/sound/silence.mp3";
 
+s_dialog = "res/dialog/dialog.png";
+s_roll = "res/sound/roll.mp3";
+
 var g_resources = [
     {type:'sound', src:s_jump},
     {type:'sound', src:s_pick},
     {type:'sound', src:s_move},
     {type:'sound', src:s_silence},
     {src:s_c_jump0},
+    {src:s_dialog},
+
     {src:s_spring_map},
     {src:s_spring_bg0},
     {src:s_spring_bg1},

@@ -406,12 +406,15 @@ Space.prototype.removeBody = function(body) {
 }
 
 Space.prototype.testNPCCollision = function(body) {
+	var found = false;
 	for (var i in this.npc) {
 		var npc = this.npc[i];
 		if (isBodyCollision(body, npc)) {
 			if (npc.collisionCallback != null) {
 				npc.collisionCallback();
+				found = true;
 			}
 		}
 	}
+	return found;
 };

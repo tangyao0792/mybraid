@@ -114,7 +114,9 @@ var RoleSprite = cc.Sprite.extend({
 		itemSprite.removeSelf();
 	},
 	talk:function() {
-		this.space.testNPCCollision(this.body);
+		if (this.space.testNPCCollision(this.body)) {
+			this.stand();
+		}
 	}
 });
 

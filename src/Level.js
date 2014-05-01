@@ -9,7 +9,18 @@ var level1 = {
 	moveRock:s_spring_aotuMoveRock,
 	magic:s_spring_magic,
 	magicGrey:s_spring_magic_grey,
-	bgSound:s_spring_bgSound
+	bgSound:s_spring_bgSound,
+	npc:null
+};
+
+level1.npc = new Array();
+
+level1.npc["old"] = { 
+	src : s_npc_old, 
+	callback:function() {
+		var dialog = g_DialogFactory.getDialog("old", new Array("哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈", "hello world!", "ni hao", "bye bye"));
+		dialog.show();
+	}
 };
 
 
@@ -19,5 +30,8 @@ var level2 = {
 	bg1:s_molten_bg1,
 	bg2:s_molten_bg2,
 	bgAutoMove:false,
-	rock:s_molten_rock
+	rock:s_molten_rock,
+	bgSound:s_spring_bgSound,
+	magic:s_spring_magic,
+	magicGrey:s_spring_magic_grey
 };

@@ -51,7 +51,8 @@
             'src/StatusLayer.js',
             'src/global.js',
             'src/AudioEngine.js',
-            'src/NPCSprite.js'
+            'src/NPCSprite.js',
+            'src/DialogSprite.js'
         ]
     };
 

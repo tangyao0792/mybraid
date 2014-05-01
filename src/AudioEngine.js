@@ -33,6 +33,6 @@ AudioEngine.prototype.playPick = function() {
 	cc.AudioEngine.getInstance().playEffect(s_pick);
 };
 
-AudioEngine.prototype.playMove = function() {
-	cc.AudioEngine.getInstance.playEffect(s_move);
-}
+AudioEngine.prototype.playRoll = function() {
+	cc.AudioEngine.getInstance().playEffect(s_roll);
+};

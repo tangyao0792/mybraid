@@ -13,3 +13,9 @@ g_moveRockVel = 100;
 
 g_screenWidth = 960;
 g_screenHeight = 600;
+
+g_dialog_x = 200;
+g_dialog_y = 300;
+
+g_gameLayer = null;
+g_statusLayer = null;

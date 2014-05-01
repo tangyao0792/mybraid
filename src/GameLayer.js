@@ -9,6 +9,8 @@ var GameLayer = cc.Layer.extend({
 	statusLayer:null,
 	eyeX:0,
 	audioEngine:null,
+	isTalking:false,
+	dialog:null,
 	init:function( level) {
 		this._super();
 
@@ -63,18 +65,21 @@ var GameLayer = cc.Layer.extend({
 			var body = new Body(wall, null, this.space, {width : w['width'], height:w['height'] - 20}, {x : x, y : y}, true);
 		}
 
-		wallGroup = this.map.getObjectGroup("smallRock").getObjects();
-		for (var i in wallGroup) {
-			var w = wallGroup[i];
-			var x = w['x'];
-			var y = w['y'];
-			var wall = cc.Sprite.create(this.level.smallRock);
-			wall.setAnchorPoint(cc.p(0, 0));
-			wall.setPosition(x, y);
-			this.addChild(wall);
+		
+		if (this.map.getObjectGroup("smallRock") != null) {
+			wallGroup = this.map.getObjectGroup("smallRock").getObjects();
+			for (var i in wallGroup) {
+				var w = wallGroup[i];
+				var x = w['x'];
+				var y = w['y'];
+				var wall = cc.Sprite.create(this.level.smallRock);
+				wall.setAnchorPoint(cc.p(0, 0));
+				wall.setPosition(x, y);
+				this.addChild(wall);
 
-			var body = new Body(wall, null, this.space, {width : w['width'], height:w['height'] - 20}, {x : x, y : y}, true);
-		}
+				var body = new Body(wall, null, this.space, {width : w['width'], height:w['height'] - 20}, {x : x, y : y}, true);
+			}
+		}	
 
 		if (this.map.getObjectGroup("moveRock") != null) {
 			var moveRock = this.map.getObjectGroup("moveRock").getObjects();
@@ -118,7 +123,7 @@ var GameLayer = cc.Layer.extend({
 			for (var i in npcs) {
 				var n = npcs[i];
 				var name = n["name"];
-				var npc = new NPCSprite(g_npc_name[name], this.space, {x:n['x'], y:n['y']});
+				var npc = new NPCSprite(this.level.npc[name], this.space, {x:n['x'], y:n['y']});
 				this.addChild(npc);
 			}
 		}
@@ -178,7 +183,24 @@ var GameLayer = cc.Layer.extend({
 		g_pauseWorld = false;
 		this.audioEngine.resumeBgSound();
 	},
+	showDialog:function(dialog) {
+		this.dialog = dialog;
+		this.isTalking = true;
+	},
+	closeDialog:function() {
+		if (!this.isTalking) {
+			return;
+		}
+		this.isTalking = false;
+		this.dialog = null;
+	},
 	onKeyDown:function(key) {
+		if (this.isTalking) {
+			if (key == cc.KEY.space) {
+				this.dialog.nextText();
+			}
+			return;
+		}
 		switch(key) {
 			case cc.KEY.left:
 				this.role.runLeft();
@@ -189,7 +211,7 @@ var GameLayer = cc.Layer.extend({
 			case cc.KEY.up:
 				this.role.jump();
 				break;
-			case cc.KEY.down:
+			case cc.KEY.space:
 				this.role.talk();
 				break;
 			case cc.KEY.c:
@@ -204,8 +226,7 @@ var GameLayer = cc.Layer.extend({
 				break;
 
 			case cc.KEY.w:      // load level调试
-				this.level = level2;
-				this.loadLevel();
+				cc.Director.getInstance().replaceScene(new MyScene2());
 				break;
 			case cc.KEY.q:
 				this.level = level1;
