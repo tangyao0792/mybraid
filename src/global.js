@@ -19,3 +19,6 @@ g_dialog_y = 300;
 
 g_gameLayer = null;
 g_statusLayer = null;
+g_currentScene = null;
+
+g_sceneNum = 3;

@@ -39,6 +39,7 @@
         //SingleEngineFile:'',
         appFiles:[
             'src/resource.js',
+            'src/Level.js',
             'src/MyScene.js',
             'src/GameLayer.js',
             'src/RoleSprite.js',
@@ -46,7 +47,6 @@
             'src/Animate.js',
             'src/PhysicsEngine.js',
             'src/Background.js',
-            'src/Level.js',
             'src/ItemSprite.js',
             'src/StatusLayer.js',
             'src/global.js',

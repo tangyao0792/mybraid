@@ -36,3 +36,7 @@ AudioEngine.prototype.playPick = function() {
 AudioEngine.prototype.playRoll = function() {
 	cc.AudioEngine.getInstance().playEffect(s_roll);
 };
+
+AudioEngine.prototype.playNext = function() {
+	cc.AudioEngine.getInstance().playEffect(s_next);
+}

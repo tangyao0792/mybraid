@@ -20,6 +20,7 @@ var GameLayer = cc.Layer.extend({
 		this.scheduleUpdate();
 
 		this.coverLayer = cc.LayerColor.create(cc.c4(0, 0, 10, 100), this.map.getMapSize().width, this.map.getMapSize().height);
+
 	},
 	cover:function() {
 		if (this.covered) {
@@ -123,7 +124,11 @@ var GameLayer = cc.Layer.extend({
 			for (var i in npcs) {
 				var n = npcs[i];
 				var name = n["name"];
-				var npc = new NPCSprite(this.level.npc[name], this.space, {x:n['x'], y:n['y']});
+				if (!(name in g_npc)) {
+					cc.log(name + " not in dict");
+					continue;
+				}
+				var npc = new NPCSprite(g_npc[name], this.space, {x:n['x'], y:n['y']});
 				this.addChild(npc);
 			}
 		}
@@ -195,10 +200,10 @@ var GameLayer = cc.Layer.extend({
 		this.dialog = null;
 	},
 	onKeyDown:function(key) {
+		cc.log(cc.KEY);
+		cc.log(key);
 		if (this.isTalking) {
-			if (key == cc.KEY.space) {
-				this.dialog.nextText();
-			}
+			this.dialog.input(key);
 			return;
 		}
 		switch(key) {
@@ -220,17 +225,21 @@ var GameLayer = cc.Layer.extend({
 			case cc.KEY.x:
 				this.stopWorld();
 				break;
+			// 重新进入
+			case cc.KEY.escape:
+				var reload = new ReloadDialogSprite();
+				reload.show();
+				break;
 
 			case cc.KEY.d:  	// 调试
 				this.role.body.setPosition(Math.random() * this.map.getMapSize().width, Math.random() * this.map.getMapSize().height);
 				break;
 
 			case cc.KEY.w:      // load level调试
-				cc.Director.getInstance().replaceScene(new MyScene2());
+				g_currentScene.nextScene();
 				break;
 			case cc.KEY.q:
-				this.level = level1;
-				this.loadLevel();
+				cc.Director.getInstance().replaceScene(new MyScene0());
 				break;
 		
 		}

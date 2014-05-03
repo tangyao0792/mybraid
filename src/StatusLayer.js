@@ -17,7 +17,8 @@ var StatusLayer = cc.Layer.extend({
 	},
 	loadLevel:function() {
 		this.magicBucket = new Array();
-		for (var i in this.level.magicGrey) {
+		//for (var i in this.level.magicGrey) {
+		for (var i = 0; i < this.level.magicNum; i++) {
 			var magicGrey = cc.Sprite.create(this.level.magicGrey[i]);
 			magicGrey.setAnchorPoint(cc.p(0, 0));
 			var p = cc.p(g_magicBucket_x + parseInt(i) * g_magicBucket_step, g_magicBucket_y);
@@ -46,8 +47,8 @@ var StatusLayer = cc.Layer.extend({
 		this.addChild(item);
 		item.setPosition(cc.p(g_magicBucket_x + parseInt(id) * g_magicBucket_step, g_magicBucket_y));
 		this.magicNum++;
-		if (this.magicNum == 9) {
-			alert("You Win!");
-		}
+	},
+	tryNext:function() {
+		return this.magicNum == this.level.magicNum;
 	}
 });

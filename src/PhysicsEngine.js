@@ -196,10 +196,6 @@ Body.prototype.tryMoveX = function(dx) {
 		return;
 	}
 	var step = 1;
-	if (dx < 0) {
-		step = -1;
-	}
-
 	if (this.space.hasBoder) {
 		if (dx < 0) {
 			var tmp = parseInt(this.space.minX - this.leftDown.x);
@@ -213,6 +209,10 @@ Body.prototype.tryMoveX = function(dx) {
 			}
 		}
 	}
+	if (dx < 0) {
+		step = -1;
+	}
+
 	var move = 0;
 	while (move != dx) {
 		move += step;
@@ -250,9 +250,6 @@ Body.prototype.tryMoveY = function(dy) {
 		return;
 	}
 	var step = 1;
-	if (dy < 0) {
-		step = -1;
-	}
 
 	if (this.space.hasBoder) {
 		if (dy < 0) {
@@ -266,6 +263,9 @@ Body.prototype.tryMoveY = function(dy) {
 				dy = tmp;
 			}
 		}
+	}
+	if (dy < 0) {
+		step = -1;
 	}
 	var move = 0;
 	// TODO 把dx变成int
@@ -377,6 +377,7 @@ Space.prototype.setBorder = function(mapWidth, mapHeight) {
 	this.maxY = mapHeight;
 };
 Space.prototype.update = function(dt) {
+
 	for (var i in this.toRemove) {
 		var body = this.toRemove[i];
 		this.bodies = this.bodies.filter(function(x) {
