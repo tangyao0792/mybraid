@@ -115,8 +115,20 @@ var RoleSprite = cc.Sprite.extend({
 		itemSprite.removeSelf();
 	},
 	talk:function() {
-		if (this.space.testNPCCollision(this.body)) {
+		var npc = this.space.testNPCCollision(this.body);
+		if (npc != null) {
+			if (npc.collisionCallback != null) {
+				npc.collisionCallback(npc.sprite);
+			}
 			this.stand();
+		}
+	},
+	pickRing:function () {
+		var npc = this.space.testNPCCollision(this.body);
+		if (npc != null) {
+			if (npc.sprite.isRing) {
+				npc.collisionCallback(npc.sprite);
+			}
 		}
 	},
 	putRing:function() {

@@ -128,6 +128,7 @@ var GameLayer = cc.Layer.extend({
 				this.addChild(npc);
 				if (name == "ring") {
 					this.ring = npc;
+					this.ring.isRing = true;
 				}
 			}
 		}
@@ -205,7 +206,11 @@ var GameLayer = cc.Layer.extend({
 		}
 		switch(key) {
 			case cc.KEY.z:
-				this.role.putRing();
+				if (this.role.hasRing) {
+					this.role.putRing();
+				} else {
+					this.role.pickRing();
+				}
 				break;
 			case cc.KEY.left:
 				this.role.runLeft();

@@ -2,12 +2,16 @@ var NPCSprite = cc.Sprite.extend({
 	animate:null,
 	space:null,
 	action:null,	// action非null时必须先执行action再执行动画
-	ctor:function(NPCConfig, space, p) {
+	isRing:false,
+	ctor:function(NPCConfig, space, p, isRing) {
 		this._super();
 		this.initWithFile(NPCConfig.src[0]);
 
 		this.setAnchorPoint(cc.p(0, 0));
 		this.space = space;
+		if (isRing == true) {
+			this.isRing = true;
+		}
 
 		this.collisionCallback = NPCConfig.callback;
 

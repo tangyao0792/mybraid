@@ -424,11 +424,8 @@ Space.prototype.testNPCCollision = function(body) {
 	for (var i in this.npc) {
 		var npc = this.npc[i];
 		if (isBodyCollision(body, npc)) {
-			if (npc.collisionCallback != null) {
-				npc.collisionCallback(npc.sprite);
-				found = true;
-			}
+			return npc;
 		}
 	}
-	return found;
+	return null;
 };
