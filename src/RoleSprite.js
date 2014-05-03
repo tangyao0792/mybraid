@@ -7,6 +7,7 @@ var RoleSprite = cc.Sprite.extend({
 	body:null,
 	state:{stand:true, runLeft:false, runRight:false},
 	layer:null,
+	hasRing:false,
 	ctor:function(src, space, p, layer) {
 		this._super();
 		this.initWithFile(src);
@@ -116,6 +117,16 @@ var RoleSprite = cc.Sprite.extend({
 	talk:function() {
 		if (this.space.testNPCCollision(this.body)) {
 			this.stand();
+		}
+	},
+	putRing:function() {
+		if (this.hasRing) {
+			this.hasRing = false;
+			g_gameLayer.ring.body.setPosition(this.getPositionX(), this.getPositionY());
+			g_gameLayer.ring.scheduleUpdate();
+			this.space.addNPC(g_gameLayer.ring.body);
+			g_gameLayer.addChild(g_gameLayer.ring);
+			g_statusLayer.disableRing();
 		}
 	}
 });

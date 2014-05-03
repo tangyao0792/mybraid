@@ -160,5 +160,10 @@
     <property name="name" value="floatman"/>
    </properties>
   </object>
+  <object x="1420" y="608" width="56" height="88">
+   <properties>
+    <property name="name" value="ring"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

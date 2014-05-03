@@ -367,6 +367,7 @@ function Space() {
 	this.hasBoder = false;
 	this.toRemove = new Array();
 	this.npc = new Array();
+	this.toRemoveNpc = new Array();
 }
 
 Space.prototype.setBorder = function(mapWidth, mapHeight) {
@@ -384,6 +385,14 @@ Space.prototype.update = function(dt) {
 			return x != body;
 		});
 	}
+	for (var i in this.toRemoveNpc) {
+		var body = this.toRemoveNpc[i];
+		this.npc = this.npc.filter(function(x) {
+			return x != body;
+		});
+	}
+
+	this.toRemoveNpc = new Array();
 	this.toRemove = new Array();
 
 	for (i in this.bodies) {
@@ -406,13 +415,17 @@ Space.prototype.removeBody = function(body) {
 	this.toRemove.push(body);
 }
 
+Space.prototype.removeNpc = function(npc) {
+	this.toRemoveNpc.push(npc);
+}
+
 Space.prototype.testNPCCollision = function(body) {
 	var found = false;
 	for (var i in this.npc) {
 		var npc = this.npc[i];
 		if (isBodyCollision(body, npc)) {
 			if (npc.collisionCallback != null) {
-				npc.collisionCallback();
+				npc.collisionCallback(npc.sprite);
 				found = true;
 			}
 		}

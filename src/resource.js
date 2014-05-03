@@ -28,11 +28,6 @@ var s_c_stand0 = "res/character/stand0.png";
 
 var s_c_jump0 = "res/character/jump.png";
 
-var s_i_key0 = "res/item/key0.png";
-var s_i_key1 = "res/item/key1.png";
-var s_i_key2 = "res/item/key2.png";
-var s_i_key3 = "res/item/key3.png";
-
 var standAnimation = new Array();
 for (var i = 0; i < 8; i++) {
     standAnimation[i] = "res/character/stand" + i + ".png";
@@ -71,11 +66,6 @@ var g_resources_level1 = [
     {src:s_spring_aotuMoveRock},
     {type:'sound', src:s_spring_bgSound},
 
-    {src:s_i_key0},
-    {src:s_i_key1},
-    {src:s_i_key2},
-    {src:s_i_key3}
-
 ];
 var g_resources_level2 = [
     {src:s_molten_map},
@@ -103,7 +93,7 @@ for (var i in s_spring_magic_grey) {
     g_resources.push({src:s_spring_magic_grey[i]});
 }
 
-// npc time
+/***************************************** npc time *****************************************/
 
 s_npc_old = new Array();
 
@@ -129,6 +119,12 @@ for (var i = 0; i < 11; i++) {
     s_npc_floatman.push("res/npc/floatman/" + i + ".png");
 }
 
+s_npc_ring = new Array();
+
+for (var i = 0; i < 4; i++) {
+    s_npc_ring.push("res/npc/ring/" + i + ".png");
+}
+
 // NPC
 for (var i in s_npc_old) {
     g_resources.push({src : s_npc_old[i]});
@@ -144,4 +140,8 @@ for (var i in s_npc_door) {
 
 for (var i in s_npc_floatman) {
     g_resources.push({src : s_npc_floatman[i]});
+}
+
+for (var i in s_npc_ring) {
+    g_resources.push({src : s_npc_ring[i]});
 }

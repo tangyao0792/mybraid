@@ -83,5 +83,10 @@
     <property name="name" value="door"/>
    </properties>
   </object>
+  <object x="404" y="535" width="35" height="28">
+   <properties>
+    <property name="name" value="ring"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

@@ -11,6 +11,7 @@ var GameLayer = cc.Layer.extend({
 	audioEngine:null,
 	isTalking:false,
 	dialog:null,
+	ring:null,
 	init:function( level) {
 		this._super();
 
@@ -103,13 +104,8 @@ var GameLayer = cc.Layer.extend({
 
 		if (this.map.getObjectGroup("item") != null) {
 			var items = this.map.getObjectGroup("item").getObjects();
-			var keySrc = new Array(s_i_key0, s_i_key1, s_i_key2, s_i_key3);
 			for (var i in items) {
 				var it = items[i];
-				if (it.name == "key") {
-					var key = new ItemSprite(this, keySrc, this.space, {x:it['x'], y:it['y']}, -1);
-					this.addChild(key);
-				}
 				for (var j in this.level.magic) {
 					if (it.name == "m" + (parseInt(j) + 1)) {
 						var magic = new ItemSprite(this, new Array(this.level.magic[j], this.level.magic[j]), this.space, {x:it['x'], y:it['y']}, j);
@@ -130,6 +126,9 @@ var GameLayer = cc.Layer.extend({
 				}
 				var npc = new NPCSprite(g_npc[name], this.space, {x:n['x'], y:n['y']});
 				this.addChild(npc);
+				if (name == "ring") {
+					this.ring = npc;
+				}
 			}
 		}
 
@@ -200,13 +199,14 @@ var GameLayer = cc.Layer.extend({
 		this.dialog = null;
 	},
 	onKeyDown:function(key) {
-		cc.log(cc.KEY);
-		cc.log(key);
 		if (this.isTalking) {
 			this.dialog.input(key);
 			return;
 		}
 		switch(key) {
+			case cc.KEY.z:
+				this.role.putRing();
+				break;
 			case cc.KEY.left:
 				this.role.runLeft();
 				break;

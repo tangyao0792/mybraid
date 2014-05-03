@@ -1,6 +1,7 @@
 var NPCSprite = cc.Sprite.extend({
 	animate:null,
 	space:null,
+	action:null,	// action非null时必须先执行action再执行动画
 	ctor:function(NPCConfig, space, p) {
 		this._super();
 		this.initWithFile(NPCConfig.src[0]);
@@ -30,6 +31,11 @@ var NPCSprite = cc.Sprite.extend({
         this.space.addNPC(this.body);
 	},
 	update:function(dt) {
+		if (this.action != null) {
+			this.runAction(this.action);
+			this.action = null;
+			return;
+		}
 		this.animate.play();
 	}
 });
@@ -73,5 +79,25 @@ g_npc["floatman"] = {
 	callback:function() {
 		var dialog = g_DialogFactory.getDialog("floatman", new Array("为什么让我飘着？"));
 		dialog.show();
+	}
+};
+
+g_npc["ring"] = {
+	src : s_npc_ring,
+	callback:function(npc) {
+		var to = cc.p(g_magicBucket_x + g_magicBucket_step * 10 + g_gameLayer.eyeX, g_magicBucket_y);
+		var actionTo = cc.MoveTo.create(0.6, to);
+		var action = cc.Sequence.create(
+			actionTo,
+			cc.CallFunc.create(
+				function(ring) {
+					g_gameLayer.space.removeNpc(npc.body);
+					g_gameLayer.removeChild(ring);
+					g_statusLayer.enableRing();
+					g_gameLayer.role.hasRing = true;
+				},
+				this)
+		);
+		npc.action = action;
 	}
 };

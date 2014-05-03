@@ -53,6 +53,8 @@ var DialogSprite = cc.Sprite.extend({
 		this.isShowing = true;
 		g_gameLayer.addChild(this);
 		g_gameLayer.addChild(this.text);
+		this.setZOrder(3);
+		this.text.setZOrder(3);
 		g_gameLayer.showDialog(this);
 	}, 
 	close:function() {
