@@ -47,6 +47,8 @@ s_dialog = "res/dialog/dialog.png";
 s_roll = "res/sound/roll.mp3";
 s_next = "res/sound/next.mp3";
 
+s_range = "res/range.png";
+
 var g_resources_level1 = [
     {type:'sound', src:s_jump},
     {type:'sound', src:s_pick},
@@ -55,6 +57,7 @@ var g_resources_level1 = [
     {type:'sound', src:s_next},
     {src:s_c_jump0},
     {src:s_dialog},
+    {src:s_range},
 
     {src:s_spring_before_map},
     {src:s_spring_map},

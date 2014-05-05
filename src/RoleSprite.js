@@ -128,6 +128,7 @@ var RoleSprite = cc.Sprite.extend({
 		if (npc != null) {
 			if (npc.sprite.isRing) {
 				npc.collisionCallback(npc.sprite);
+				g_gameLayer.hideRange();
 			}
 		}
 	},
@@ -142,6 +143,7 @@ var RoleSprite = cc.Sprite.extend({
 			g_ring_on = true;
 			g_ring_x = this.getPositionX();
 			g_ring_y = this.getPositionY();
+			g_gameLayer.showRange();
 		}
 	}
 });

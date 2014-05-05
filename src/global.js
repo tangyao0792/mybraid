@@ -26,4 +26,4 @@ g_sceneNum = 3;
 g_ring_on = false;
 g_ring_x = 0;
 g_ring_y = 0;
-g_ring_range = 300; // 扭曲时间辐射范围
+g_ring_range = 150; // 扭曲时间辐射范围

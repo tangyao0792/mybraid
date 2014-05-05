@@ -12,6 +12,7 @@ var GameLayer = cc.Layer.extend({
 	isTalking:false,
 	dialog:null,
 	ring:null,
+	range:null,
 	init:function( level) {
 		this._super();
 
@@ -21,7 +22,7 @@ var GameLayer = cc.Layer.extend({
 		this.scheduleUpdate();
 
 		this.coverLayer = cc.LayerColor.create(cc.c4(0, 0, 10, 100), this.map.getMapSize().width, this.map.getMapSize().height);
-
+		this.range = cc.Sprite.create(s_range);
 	},
 	cover:function() {
 		if (this.covered) {
@@ -264,5 +265,21 @@ var GameLayer = cc.Layer.extend({
 	},
 	enableItem:function(item) {
 		this.statusLayer.enableItem(item);
+	},
+	showRange:function() {
+		if (!g_ring_on) {
+			return;
+		}
+		cc.log('s');
+		this.range.setZOrder(10);
+		this.range.setPosition(g_ring_x, g_ring_y);
+		this.addChild(this.range);
+	},
+	hideRange:function() {
+		if (g_ring_on) {
+			return;
+		}
+		cc.log('h');
+		this.removeChild(this.range);
 	}
 });
