@@ -3,6 +3,8 @@ var MyScene = cc.Scene.extend({
 	statusLayer:null,
 	onEnter:function() {
 		this._super();
+		g_ring_on = false;
+
 		this.gameLayer = new GameLayer();
 		this.gameLayer.init(this.level);
 

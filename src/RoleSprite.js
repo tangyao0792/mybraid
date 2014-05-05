@@ -124,7 +124,7 @@ var RoleSprite = cc.Sprite.extend({
 		}
 	},
 	pickRing:function () {
-		var npc = this.space.testNPCCollision(this.body);
+		var npc = this.space.testRingCollision(this.body);
 		if (npc != null) {
 			if (npc.sprite.isRing) {
 				npc.collisionCallback(npc.sprite);
@@ -139,6 +139,9 @@ var RoleSprite = cc.Sprite.extend({
 			this.space.addNPC(g_gameLayer.ring.body);
 			g_gameLayer.addChild(g_gameLayer.ring);
 			g_statusLayer.disableRing();
+			g_ring_on = true;
+			g_ring_x = this.getPositionX();
+			g_ring_y = this.getPositionY();
 		}
 	}
 });

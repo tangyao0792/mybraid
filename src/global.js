@@ -6,10 +6,10 @@ g_pauseWorld = false;
 g_worldTime = 0.0;	// 会被暂停
 g_realTime = 0.0;	// 真正的时间，不会暂停
 
-g_g = -1800;		// 重力加速度g
-g_runVel = 180;
-g_jumpVel = 600;
-g_moveRockVel = 100;
+g_g = -1500;		// 重力加速度g
+g_runVel = 130;
+g_jumpVel = 540;
+g_moveRockVel = 80;
 
 g_screenWidth = 960;
 g_screenHeight = 600;
@@ -22,3 +22,8 @@ g_statusLayer = null;
 g_currentScene = null;
 
 g_sceneNum = 3;
+
+g_ring_on = false;
+g_ring_x = 0;
+g_ring_y = 0;
+g_ring_range = 300; // 扭曲时间辐射范围

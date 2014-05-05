@@ -103,17 +103,24 @@ Body.prototype.setPosition = function(x, y) {
 
 Body.prototype.update = function(dt) {
 	if (!g_pauseWorld) {
+		if (g_ring_on) {
+			var rate = getRateWhenRingOn(this.x, this.y);
+			dt *= rate;
+		}
+
+
+		// 算位置
+		var vx = this.vx + this.baseVx;
+		var dx = dt * vx;
+		var realDx = this.tryMoveX(dx);
+
+		var vy = this.vy;
+		var dy = dt * vy;
+		var realDy = this.tryMoveY(dy);
+
 		// 更新速度
 		this.vx += this.ax * dt;
 		this.vy += this.ay * dt;
-
-		// 算位置
-		var dx = dt * (this.vx + this.baseVx);
-		var realDx = this.tryMoveX(dx);
-
-		var dy = dt * this.vy;
-		var realDy = this.tryMoveY(dy);
-
 	}
 
 	this.updateCollision();
@@ -191,7 +198,7 @@ Body.prototype.updateCollision = function() {
 };
 
 Body.prototype.tryMoveX = function(dx) {
-	dx = parseInt(dx);
+	//dx = parseInt(dx);
 	if (dx == 0) {
 		return;
 	}
@@ -214,8 +221,11 @@ Body.prototype.tryMoveX = function(dx) {
 	}
 
 	var move = 0;
-	while (move != dx) {
+	while (Math.abs(move) < Math.abs(dx)) {
 		move += step;
+		if (Math.abs(move) > Math.abs(dx)) {
+			move = dx;
+		}
 		var box = {
 			leftDown : {x : this.leftDown.x + move, y : this.leftDown.y}, 
 			rightTop : {x : this.rightTop.x + move, y : this.rightTop.y}
@@ -245,7 +255,6 @@ Body.prototype.tryMoveX = function(dx) {
 };
 
 Body.prototype.tryMoveY = function(dy) {
-	dy = parseInt(dy);
 	if (dy == 0) {
 		return;
 	}
@@ -268,9 +277,11 @@ Body.prototype.tryMoveY = function(dy) {
 		step = -1;
 	}
 	var move = 0;
-	// TODO 把dx变成int
-	while (move != dy) {
+	while (Math.abs(move) < Math.abs(dy)) {
 		move += step;
+		if (Math.abs(move) > Math.abs(dy)) {
+			move = dy;
+		}
 		var box = {
 			leftDown : {x : this.leftDown.x, y : this.leftDown.y + move}, 
 			rightTop : {x : this.rightTop.x, y : this.rightTop.y + move}
@@ -324,6 +335,8 @@ function MoveRockBody(sprite, space, toLeft, toRight, contentSize, p, vx, timeTy
 MoveRockBody.prototype.update = function(dt) {
 	this.isMoving = false;
 	this.isMoving = false;
+
+	// 暂停时间判断
 	if (this.timeType == 0) {
 		if (g_pauseWorld) {
 			return;
@@ -336,6 +349,12 @@ MoveRockBody.prototype.update = function(dt) {
 		}
 	}
 	this.isMoving = true;
+	
+	// 扭曲时间
+	if (this.timeType != 1 && g_ring_on) {
+		var rate = getRateWhenRingOn(this.x, this.y);
+		dt *= rate;
+	}
 	var dx = dt * this.vx;
 	var realDx = this.tryMoveX(dx);
 	if (realDx != 0) {
@@ -429,3 +448,31 @@ Space.prototype.testNPCCollision = function(body) {
 	}
 	return null;
 };
+
+Space.prototype.testRingCollision = function(body) {
+	var found = false;
+	for (var i in this.npc) {
+		var npc = this.npc[i];
+		if (!npc.sprite.isRing) {
+			continue;
+		}
+		if (isBodyCollision(body, npc)) {
+			return npc;
+		}
+	}
+	return null;
+};
+
+
+
+// 计算时间扭曲率
+function getRateWhenRingOn(x, y) {
+	var dist = Math.sqrt((x - g_ring_x) * (x - g_ring_x) + (y - g_ring_y) * (y - g_ring_y));
+	if (dist > g_ring_range) {
+		return 1.0;
+	} else if (dist < 100) {
+		return 0.2
+	} else {
+		return (dist - 100) / g_ring_range + 0.2;
+	}
+}

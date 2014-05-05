@@ -98,7 +98,7 @@ var GameLayer = cc.Layer.extend({
 					wall.setZOrder(1);
 				}
 				var body = new MoveRockBody(wall, this.space, w['toLeft'], w['toRight'], {width : w['width'],
-						 height:w['height'] - 20}, {x : x, y : y}, 100, w['timeType']);
+						 height:w['height'] - 20}, {x : x, y : y}, g_moveRockVel, w['timeType']);
 			}
 		}
 

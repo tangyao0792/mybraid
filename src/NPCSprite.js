@@ -103,5 +103,6 @@ g_npc["ring"] = {
 				this)
 		);
 		npc.action = action;
+		g_ring_on = false;
 	}
 };

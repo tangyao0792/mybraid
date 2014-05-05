@@ -7,6 +7,8 @@
  	totalUnit:0,
  	currentIndex:-1,
  	target:null,
+ 	mytime:0,
+ 	lastWorldTime:0,
  	ctor:function(target) {
  		this.target = target;
  		this.spriteFrames = new Array();
@@ -19,7 +21,13 @@
 		this.totalUnit = this.delayUnit * this.spriteFrames.length;
  	},
  	play:function() {
-		var tempTime = g_worldTime % this.totalUnit;
+ 		var dt = g_worldTime - this.lastWorldTime;
+ 		if (g_ring_on) {
+ 			dt *= getRateWhenRingOn(this.target.getPositionX(), this.target.getPositionY());
+ 		}
+ 		this.mytime += dt;
+ 		this.lastWorldTime = g_worldTime;
+		var tempTime = this.mytime % this.totalUnit;
 		var index = Math.floor(tempTime / this.delayUnit);
 		if (index != this.currentIndex) {
 			this.target.setDisplayFrame(this.spriteFrames[index]);
