@@ -8,6 +8,9 @@ var RoleSprite = cc.Sprite.extend({
 	state:{stand:true, runLeft:false, runRight:false},
 	layer:null,
 	hasRing:false,
+	shadow:null,
+	hasShadow:false,
+	shadowBody:null,
 	ctor:function(src, space, p, layer) {
 		this._super();
 		this.initWithFile(src);
@@ -21,6 +24,7 @@ var RoleSprite = cc.Sprite.extend({
 		this.layer = layer;
 
 		this.scheduleUpdate();
+		this.shadow = cc.Sprite.create();
 	},
 	initPhycics:function(p) {
 		var width = this._contentSize._width;
@@ -145,6 +149,44 @@ var RoleSprite = cc.Sprite.extend({
 			g_ring_y = this.getPositionY();
 			g_gameLayer.showRange();
 		}
+	},
+	shadowHunt:function() {
+		if (this.hasShadow) {
+			this.beShadow();
+			this.hasShadow = false;
+		} else {
+			this.makeShadow();
+			this.hasShadow = true;
+		}
+	},
+	// 创造一个影子，记录当前角色的速度，加速度，动画等状态
+	makeShadow:function() {
+		this.shadowBody = {
+							x : this.body.x, 
+							y : this.body.y, 
+							vx : this.body.vx, 
+							vy : this.body.vy,
+							ax : this.body.ax,
+							ay : this.body.ay,
+							flippedX : this._flippedX,
+							animate : this.animate
+						};
+		this.shadow.setDisplayFrame(this.animate.getCurrentFrame());
+		this.shadow.setAnchorPoint(cc.p(0, 0));
+		this.shadow.setPosition(cc.p(this.body.x, this.body.y));
+		this.shadow.setFlippedX(this.shadowBody.flippedX);
+		this.shadow.setOpacity(120);
+		g_gameLayer.addChild(this.shadow);
+	},
+	beShadow:function() {
+		this.body.setPosition(this.shadowBody.x, this.shadowBody.y);
+		this.body.vx = this.shadowBody.vx;
+		this.body.vy = this.shadowBody.vy;
+		this.body.ax = this.shadowBody.ax;
+		this.body.ay = this.shadowBody.ay;
+		this.setFlippedX(this.shadowBody.flippedX);
+		this.animate = this.shadowBody.animate;
+		g_gameLayer.removeChild(this.shadow);
 	}
 });
 

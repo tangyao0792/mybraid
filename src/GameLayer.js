@@ -231,6 +231,9 @@ var GameLayer = cc.Layer.extend({
 			case cc.KEY.x:
 				this.stopWorld();
 				break;
+			case cc.KEY.a:
+				this.role.shadowHunt();
+				break;
 			// 重新进入
 			case cc.KEY.escape:
 				var reload = new ReloadDialogSprite();

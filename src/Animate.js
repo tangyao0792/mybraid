@@ -7,6 +7,7 @@
  	totalUnit:0,
  	currentIndex:-1,
  	target:null,
+ 	// TODO 把mytime移到role上
  	mytime:0,
  	lastWorldTime:0,
  	ctor:function(target) {
@@ -33,5 +34,8 @@
 			this.target.setDisplayFrame(this.spriteFrames[index]);
 			this.currentIndex = index;
 		}
+ 	},
+ 	getCurrentFrame:function() {
+ 		return this.spriteFrames[this.currentIndex];
  	}
 });
