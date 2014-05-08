@@ -442,6 +442,9 @@ Space.prototype.testNPCCollision = function(body) {
 	var found = false;
 	for (var i in this.npc) {
 		var npc = this.npc[i];
+		if (npc.sprite.isRing) {
+			continue;
+		}
 		if (isBodyCollision(body, npc)) {
 			return npc;
 		}
