@@ -159,11 +159,10 @@ var GameLayer = cc.Layer.extend({
 		g_realTime += dt;
 
 
+		this.space.update(dt);
 		if (!g_poping_world) {
-			this.space.update(dt);
 			g_timestack.pushWorld();
 		} else {
-			this.space.update(0);
 			g_timestack.popWorld();
 		}
 

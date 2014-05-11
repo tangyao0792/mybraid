@@ -85,6 +85,9 @@ Timestack.prototype.popWorld = function() {
 	// load automove body
 	for (var i in world.movebody) {
 		g_movebody[i].vx = world.movebody[i].vx;
+		if (g_movebody[i].timeType == 1) {
+			continue;
+		}
 		g_movebody[i].setPosition(world.movebody[i].x, world.movebody[i].y);
 	}
 
