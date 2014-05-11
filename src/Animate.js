@@ -10,9 +10,13 @@
  	// TODO 把mytime移到role上
  	mytime:0,
  	lastWorldTime:0,
+ 	id:-1,
  	ctor:function(target) {
  		this.target = target;
  		this.spriteFrames = new Array();
+
+ 		this.id = g_animate_id++;
+ 		g_animate[this.id] = this;
  	},
  	setDelayUnit:function(delayUnit) {
  		this.delayUnit = delayUnit;

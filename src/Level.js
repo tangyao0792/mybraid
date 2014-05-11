@@ -13,7 +13,8 @@ var level0 = {
 	magicGrey:s_spring_magic_grey,
 	magicNum:4,
 	bgSound:s_spring_bgSound,
-	resource:g_resources_level1
+	resource:g_resources_level1,
+	timestack:true		// 打开timestack，可以全局回到过去
 };
 
 

@@ -41,17 +41,21 @@ var RoleSprite = cc.Sprite.extend({
 		for (var i in standAnimation) {
 			this.standAnimate.addFrameWithFilename(standAnimation[i]);
 		}
+		// 土办法记录animate。。。
+		this.standAnimate.state = g_stand_state;
 
 		this.runAnimate = new Animate(this);
 		this.runAnimate.setDelayUnit(1.0 / 4);
 		for (var i in runAnimation) {
 			this.runAnimate.addFrameWithFilename(runAnimation[i]);
 		}
+		this.runAnimate.state = g_run_state;
 
 		this.jumpAnimate = new Animate(this);
 		this.jumpAnimate.setDelayUnit(1.0 / 4);
 		this.jumpAnimate.addFrameWithFilename(s_c_jump0);
 		this.jumpAnimate.addFrameWithFilename(s_c_jump0);
+		this.jumpAnimate.state = g_jump_state;
 
 	},
 	setAnimate:function(animate) {

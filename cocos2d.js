@@ -52,7 +52,8 @@
             'src/global.js',
             'src/AudioEngine.js',
             'src/NPCSprite.js',
-            'src/DialogSprite.js'
+            'src/DialogSprite.js',
+            'src/Timestack.js'
         ]
     };
 

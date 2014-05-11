@@ -13,6 +13,7 @@ var GameLayer = cc.Layer.extend({
 	dialog:null,
 	ring:null,
 	range:null,
+	keyState:{left:false, right:false},
 	init:function( level) {
 		this._super();
 
@@ -151,11 +152,20 @@ var GameLayer = cc.Layer.extend({
 	},
 	// 设计原则：不管如何操作时间，update都必须要调用
 	update:function(dt) {
+		g_lastWorldTime = g_worldTime;
 		if (!g_pauseWorld) {
 			g_worldTime += dt;
 		}	
 		g_realTime += dt;
-		this.space.update(dt);
+
+
+		if (!g_poping_world) {
+			this.space.update(dt);
+			g_timestack.pushWorld();
+		} else {
+			this.space.update(0);
+			g_timestack.popWorld();
+		}
 
 		this.updateCamera(this.role.getPositionX());
 		this.background.update(this.role.getPositionX());
@@ -201,6 +211,12 @@ var GameLayer = cc.Layer.extend({
 		this.dialog = null;
 	},
 	onKeyDown:function(key) {
+		if (key == cc.KEY.left) {
+			this.keyState.left = true;
+		} else if (key == cc.KEY.right) {
+			this.keyState.right = true;
+		}
+
 		if (this.isTalking) {
 			this.dialog.input(key);
 			return;
@@ -234,6 +250,9 @@ var GameLayer = cc.Layer.extend({
 			case cc.KEY.a:
 				this.role.shadowHunt();
 				break;
+			case cc.KEY.s:
+				startPoping();
+				break;
 			// 重新进入
 			case cc.KEY.escape:
 				var reload = new ReloadDialogSprite();
@@ -254,6 +273,12 @@ var GameLayer = cc.Layer.extend({
 		}
 	},
 	onKeyUp:function(key) {
+		if (key == cc.KEY.left) {
+			this.keyState.left = false;
+		} else if (key == cc.KEY.right) {
+			this.keyState.right = false;
+		}
+
 		switch(key) {
 			case cc.KEY.left:
 				this.role.stand();
@@ -264,6 +289,13 @@ var GameLayer = cc.Layer.extend({
 			case cc.KEY.x:
 				this.resumeWorld();
 				break;
+			case cc.KEY.s:
+				stopPoping();
+				// 从poping中恢复的时候，重新判断按键
+				if (!this.keyState.left || !this.keyState.right) {
+					this.role.stand();
+				}
+				break;
 		}
 	},
 	enableItem:function(item) {
@@ -273,7 +305,6 @@ var GameLayer = cc.Layer.extend({
 		if (!g_ring_on) {
 			return;
 		}
-		cc.log('s');
 		this.range.setZOrder(10);
 		this.range.setPosition(g_ring_x, g_ring_y);
 		this.addChild(this.range);
@@ -282,7 +313,6 @@ var GameLayer = cc.Layer.extend({
 		if (g_ring_on) {
 			return;
 		}
-		cc.log('h');
 		this.removeChild(this.range);
 	}
 });
